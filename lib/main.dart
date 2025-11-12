@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'core/injection.dart';
 import 'features/chat/presentation/pages/chat_page.dart';
 import 'features/portfolio/presentation/bloc/portfolio_event.dart';
 import 'features/portfolio/presentation/pages/portfolio_page.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MainApp());
 }
 

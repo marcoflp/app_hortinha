@@ -5,9 +5,10 @@ import '../features/chat/presentation/bloc/chat_bloc.dart';
 import '../features/portfolio/data/repositories/portfolio_repository_impl.dart';
 import '../features/portfolio/domain/usecases/get_garden_items.dart';
 import '../features/portfolio/presentation/bloc/portfolio_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Injection {
-  static const String geminiApiKey = 'AIzaSyDrnt0P5MkJw6wn-jA0JphSVhWXJdrGBmQ';
+  static final String geminiApiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
 
   static ChatBloc chatBloc() {
     final datasource = GeminiDatasource(geminiApiKey);
