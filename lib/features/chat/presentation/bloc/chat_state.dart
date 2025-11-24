@@ -12,11 +12,12 @@ class ChatLoading extends ChatState {}
 
 class ChatLoaded extends ChatState {
   final List<Message> messages;
+  final bool isLoading;
 
-  ChatLoaded(this.messages);
+  ChatLoaded(this.messages, {this.isLoading = false});
 
   @override
-  List<Object?> get props => [messages];
+  List<Object?> get props => [messages, isLoading];
 }
 
 class ChatError extends ChatState {

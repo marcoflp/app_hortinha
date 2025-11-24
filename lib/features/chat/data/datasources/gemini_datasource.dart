@@ -12,10 +12,21 @@ class GeminiDatasource {
         );
 
   Future<String> sendMessage(String message) async {
-    print('Enviando para Gemini: $message');
-    final prompt = 'Você é um especialista em hortas. Responda: $message';
+    final prompt = '''
+Você é um especialista em jardinagem e hortas domésticas. Responda de forma simples e direta, SEM usar markdown, asteriscos, hashtags ou formatação especial.
+
+Responda em texto simples, como se estivesse conversando pessoalmente. Use apenas pontos para separar ideias quando necessário.
+
+Pergunta: $message''';
     final response = await model.generateContent([Content.text(prompt)]);
-    print('Resposta do Gemini: ${response.text}');
-    return response.text ?? 'Erro ao processar';
+    String cleanText = response.text ?? 'Erro ao processar';
+    
+    // Remove formatação markdown
+    cleanText = cleanText.replaceAll(RegExp(r'\*+'), '');
+    cleanText = cleanText.replaceAll(RegExp(r'#+'), '');
+    cleanText = cleanText.replaceAll(RegExp(r'_+'), '');
+    cleanText = cleanText.replaceAll(RegExp(r'`+'), '');
+    
+    return cleanText.trim();
   }
 }

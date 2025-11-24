@@ -13,26 +13,20 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Future<void> _onSendMessage(SendMessageEvent event, Emitter<ChatState> emit) async {
-    print('recebeu mensagem: ${event.message}');
-    
     final userMessage = Message(
       text: event.message,
       isUser: true,
       timestamp: DateTime.now(),
     );
     _messages.add(userMessage);
-    emit(ChatLoaded(List.from(_messages)));
-    print('mensagem do usuário adicionada');
+    emit(ChatLoaded(List.from(_messages), isLoading: true));
 
     try {
-      print('chamando api');
       final response = await sendMessage(event.message);
-      print('resposta recebida: ${response.text}');
       _messages.add(response);
       emit(ChatLoaded(List.from(_messages)));
     } catch (e) {
-      print('erro: $e');
-      emit(ChatError('Erro: $e'));
+      emit(ChatError('Erro ao enviar mensagem'));
       emit(ChatLoaded(List.from(_messages)));
     }
   }
