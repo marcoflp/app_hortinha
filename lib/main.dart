@@ -9,7 +9,17 @@ import 'features/portfolio/presentation/bloc/portfolio_event.dart';
 import 'features/portfolio/presentation/pages/portfolio_page.dart';
 
 Future<void> main() async {
-  await dotenv.load(fileName: ".env");
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  try {
+    await dotenv.load(fileName: ".env");
+    print('Main: Arquivo .env carregado com sucesso');
+    print('Main: Variáveis disponíveis: ${dotenv.env.keys.toList()}');
+  } catch (e) {
+    print('Main: Erro ao carregar .env: $e');
+    print('Main: Continuando sem arquivo .env');
+  }
+  
   runApp(const MainApp());
 }
 

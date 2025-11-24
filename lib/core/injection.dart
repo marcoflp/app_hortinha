@@ -11,6 +11,9 @@ class Injection {
   static final String geminiApiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
 
   static ChatBloc chatBloc() {
+    print('Injection: API Key carregada: ${geminiApiKey.isNotEmpty}');
+    print('Injection: Primeiros caracteres da API Key: ${geminiApiKey.length > 10 ? geminiApiKey.substring(0, 10) : 'vazia'}');
+    
     final datasource = GeminiDatasource(geminiApiKey);
     final repository = ChatRepositoryImpl(datasource);
     final usecase = SendMessage(repository);

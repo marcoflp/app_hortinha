@@ -142,7 +142,7 @@ class HomePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Acompanhe suas plantas',
+                          'Registre a evolução da sua horta',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 12,
@@ -191,7 +191,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       Icon(Icons.check_circle, color: AppTheme.lightGreen, size: 16),
                       const SizedBox(width: 8),
-                      const Text('Gerenciamento de plantas'),
+                      const Text('Registro de portfólio fotográfico'),
                     ],
                   ),
                 ],

@@ -42,6 +42,8 @@ class _ChatPageState extends State<ChatPage> {
           Expanded(
             child: BlocBuilder<ChatBloc, ChatState>(
               builder: (context, state) {
+                print('ChatPage: Estado atual: ${state.runtimeType}');
+                
                 if (state is ChatInitial) {
                   return Padding(
                     padding: const EdgeInsets.all(16),
@@ -208,10 +210,25 @@ class _ChatPageState extends State<ChatPage> {
                     ],
                   );
                 }
-                return const Center(
-                  child: Text(
-                    'Algo deu errado. Tente novamente!',
-                    style: TextStyle(color: Colors.red),
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.error, color: Colors.red, size: 48),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Estado desconhecido: ${state.runtimeType}',
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                      const SizedBox(height: 8),
+                      ElevatedButton(
+                        onPressed: () {
+                          print('ChatPage: Forçando reinicialização do chat');
+                          // Recriar o bloc pode ajudar
+                        },
+                        child: const Text('Tentar novamente'),
+                      ),
+                    ],
                   ),
                 );
               },
@@ -247,6 +264,7 @@ class _ChatPageState extends State<ChatPage> {
                       ),
                       onSubmitted: (text) {
                         if (text.isNotEmpty) {
+                          print('ChatPage: Enviando mensagem via Enter: $text');
                           context.read<ChatBloc>().add(SendMessageEvent(text));
                           _controller.clear();
                         }
@@ -265,8 +283,11 @@ class _ChatPageState extends State<ChatPage> {
                       icon: const Icon(Icons.send, color: Colors.white),
                       onPressed: () {
                         if (_controller.text.isNotEmpty) {
+                          print('ChatPage: Enviando mensagem: ${_controller.text}');
                           context.read<ChatBloc>().add(SendMessageEvent(_controller.text));
                           _controller.clear();
+                        } else {
+                          print('ChatPage: Mensagem vazia, não enviando');
                         }
                       },
                     ),
@@ -285,6 +306,7 @@ class _ChatPageState extends State<ChatPage> {
       padding: const EdgeInsets.only(bottom: 12),
       child: ModernCard(
         onTap: () {
+          print('ChatPage: Enviando sugestão: $suggestion');
           _controller.text = suggestion;
           context.read<ChatBloc>().add(SendMessageEvent(suggestion));
           _controller.clear();
